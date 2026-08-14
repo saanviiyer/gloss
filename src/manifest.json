@@ -1,0 +1,47 @@
+{
+  "manifest_version": 3,
+  "name": "gloss",
+  "version": "0.1.0",
+  "description": "Highlight a sentence on a page or in a PDF and an LLM explains what it means in a small tooltip. Built for researchers reading dense papers.",
+  "permissions": ["activeTab", "scripting", "contextMenus", "storage"],
+  "host_permissions": ["https://api.anthropic.com/*"],
+  "background": {
+    "service_worker": "background/service-worker.js",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "gloss",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "options_page": "options/options.html",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content/content-script.js"],
+      "css": ["content/content.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "commands": {
+    "explain-selection": {
+      "suggested_key": { "default": "Alt+E" },
+      "description": "Explain the current selection with gloss"
+    }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["reader/reader.html", "pdfjs/*"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

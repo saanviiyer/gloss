@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>gloss PDF reader</title>
+    <link rel="stylesheet" href="./reader.css" />
+  </head>
+  <body>
+    <header class="toolbar">
+      <span class="brand">gloss</span>
+      <label class="file-label">
+        Open PDF
+        <input id="file" type="file" accept="application/pdf" />
+      </label>
+      <input id="url" type="url" placeholder="…or paste a PDF URL" />
+      <button id="open-url" type="button">Open URL</button>
+      <div id="status" class="status">Loading…</div>
+    </header>
+    <main id="pages" class="pages"></main>
+    <script type="module" src="./reader.js"></script>
+  </body>
+</html>

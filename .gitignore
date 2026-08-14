@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.env
+.env.*
+*.log
+.DS_Store
+# Vendored but regenerated on build from node_modules
+dist/pdfjs/

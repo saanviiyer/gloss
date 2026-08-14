@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>gloss options</title>
+    <link rel="stylesheet" href="./options.css" />
+  </head>
+  <body>
+    <main class="wrap">
+      <h1><span class="brand">gloss</span> settings</h1>
+      <div id="mode" class="mode">Loading…</div>
+
+      <label class="field">
+        <span>Anthropic API key</span>
+        <input id="apiKey" type="password" placeholder="sk-ant-…" autocomplete="off" />
+        <small>Stored only in this browser (chrome.storage.local). Leave empty for mock mode.</small>
+      </label>
+
+      <label class="field">
+        <span>Model</span>
+        <input id="model" type="text" placeholder="claude-haiku-4-5" />
+        <small>A fast model is recommended for short explanations.</small>
+      </label>
+
+      <label class="field">
+        <span>Explanation style</span>
+        <select id="style"></select>
+      </label>
+
+      <label class="field">
+        <span>Max length (words)</span>
+        <input id="maxLength" type="number" min="20" max="400" step="10" />
+      </label>
+
+      <div class="actions">
+        <button id="save" type="button">Save</button>
+        <span id="status" class="status"></span>
+      </div>
+
+      <p class="links">
+        <a id="open-reader" href="#">Open the PDF reader</a>
+      </p>
+    </main>
+    <script src="./options.js"></script>
+  </body>
+</html>
