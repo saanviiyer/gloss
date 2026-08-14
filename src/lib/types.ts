@@ -1,4 +1,4 @@
-// Shared types. Pure — safe to import from anywhere (tests included).
+// Shared types. Pure, safe to import from anywhere (tests included).
 
 export type Style = "plain" | "eli5" | "technical";
 
