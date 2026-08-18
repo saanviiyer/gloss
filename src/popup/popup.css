@@ -4,9 +4,68 @@ body {
   color: #1f2937;
 }
 .pop {
-  width: 260px;
+  width: 360px;
   padding: 14px 16px;
 }
+.history-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 14px 0 6px;
+  font-size: 12px;
+}
+.history-head button,
+.history-meta button {
+  border: 0;
+  background: transparent;
+  color: #4f46e5;
+  cursor: pointer;
+  font: inherit;
+  padding: 0;
+}
+.history {
+  max-height: 300px;
+  overflow: auto;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+.history-item {
+  padding: 9px 10px;
+  border-bottom: 1px solid #e5e7eb;
+}
+.history-item:last-child { border-bottom: 0; }
+.selection {
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.explanation {
+  color: #4b5563;
+  font-size: 11px;
+  line-height: 1.4;
+  margin: 3px 0 5px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
+.history-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 10px;
+  color: #6b7280;
+}
+.history-meta a {
+  color: #6b7280;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.empty { padding: 12px; color: #6b7280; font-size: 12px; }
 .head {
   margin-bottom: 10px;
 }
@@ -44,10 +103,18 @@ body {
   display: flex;
   gap: 16px;
 }
-.links a {
+.links a,
+.links button {
   color: #4f46e5;
   font-size: 13px;
   text-decoration: none;
+}
+.links button {
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  font: inherit;
+  padding: 0;
 }
 .links a:hover {
   text-decoration: underline;

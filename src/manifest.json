@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "gloss",
-  "version": "0.1.0",
-  "description": "Highlight a sentence on a page or in a PDF and an LLM explains what it means in a small tooltip. Built for researchers reading dense papers.",
+  "name": "rxiver gloss",
+  "version": "0.2.0",
+  "description": "The rxiver reading companion: explain highlighted research text and export grounded excerpts into rxiver collections.",
   "permissions": ["activeTab", "scripting", "contextMenus", "storage"],
   "host_permissions": ["https://api.anthropic.com/*"],
   "background": {
@@ -11,7 +11,7 @@
   },
   "action": {
     "default_popup": "popup/popup.html",
-    "default_title": "gloss",
+    "default_title": "rxiver gloss",
     "default_icon": {
       "16": "icons/icon16.png",
       "48": "icons/icon48.png",
@@ -35,7 +35,7 @@
   "commands": {
     "explain-selection": {
       "suggested_key": { "default": "Alt+E" },
-      "description": "Explain the current selection with gloss"
+      "description": "Explain the current selection with rxiver gloss"
     }
   },
   "web_accessible_resources": [

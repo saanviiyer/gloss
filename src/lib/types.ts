@@ -13,6 +13,8 @@ export interface Settings {
   style: Style;
   /** Approximate target length of the explanation, in words. */
   maxLength: number;
+  /** Save successful explanations locally for later reference. */
+  saveHistory: boolean;
 }
 
 export const DEFAULT_SETTINGS: Settings = {
@@ -21,6 +23,7 @@ export const DEFAULT_SETTINGS: Settings = {
   model: "claude-haiku-4-5",
   style: "plain",
   maxLength: 90,
+  saveHistory: true,
 };
 
 /** Anthropic Messages API request body shape (only the fields we send). */

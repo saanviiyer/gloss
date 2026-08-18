@@ -1,12 +1,13 @@
 {
-  "name": "gloss",
-  "version": "0.1.0",
-  "description": "A Chrome MV3 extension that explains a highlighted sentence in a tooltip using the Anthropic Messages API, for researchers reading dense papers.",
+  "name": "rxiver-gloss",
+  "version": "0.2.0",
+  "description": "The rxiver Chrome companion for explanations, PDF reading, history, and collection export.",
   "private": true,
   "type": "module",
   "scripts": {
     "typecheck": "tsc --noEmit",
     "build": "node build.mjs",
+    "package": "npm run test && npm run build && node package.mjs",
     "test": "vitest run"
   },
   "dependencies": {

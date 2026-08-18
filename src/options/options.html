@@ -3,18 +3,26 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>gloss options</title>
+    <title>rxiver gloss options</title>
     <link rel="stylesheet" href="./options.css" />
   </head>
   <body>
     <main class="wrap">
-      <h1><span class="brand">gloss</span> settings</h1>
+      <h1><span class="brand">rxiver gloss</span> settings</h1>
       <div id="mode" class="mode">Loading…</div>
 
       <label class="field">
         <span>Anthropic API key</span>
         <input id="apiKey" type="password" placeholder="sk-ant-…" autocomplete="off" />
         <small>Stored only in this browser (chrome.storage.local). Leave empty for mock mode.</small>
+      </label>
+
+      <label class="check-field">
+        <input id="saveHistory" type="checkbox" />
+        <span>
+          Save explanation history locally
+          <small>Keeps the latest 100 explanations in this browser. Page URLs are saved without query strings.</small>
+        </span>
       </label>
 
       <label class="field">

@@ -1,8 +1,11 @@
-# gloss
+# rxiver gloss
 
 Highlight a sentence on a web page or in a PDF and an LLM explains what it means in a small tooltip. Built for researchers reading dense papers.
 
-gloss is a Chrome / Edge extension (Manifest V3). It sends the highlighted text, plus a little surrounding context, to the Anthropic Messages API and shows a short explanation of the highlighted part in a clean card next to your selection.
+rxiver gloss is the Chrome / Edge reading companion for the canonical rxiver
+workspace. It sends highlighted text, plus a little surrounding context, to the
+Anthropic Messages API and shows a short explanation in a clean card next to the
+selection.
 
 ## What it does
 
@@ -10,6 +13,11 @@ gloss is a Chrome / Edge extension (Manifest V3). It sends the highlighted text,
 - Press Alt+E to explain the current selection.
 - Right-click a selection and choose "Explain with gloss".
 - Read PDFs inside a bundled PDF.js viewer where the same highlight to Explain flow works.
+- Keeps an optional, local-only history of the latest 100 explanations, with
+  source links stripped of query strings and one-click copy from the popup.
+- Exports the complete history in rxiver's versioned JSON format. In rxiver,
+  open a collection and choose **Import from rxiver gloss** to turn highlights
+  into excerpts and explanations into research notes.
 - Runs in mock mode with no setup, so you can try the whole flow before adding a key.
 
 ## Build
@@ -22,6 +30,17 @@ npm run build
 ```
 
 The build output is the `dist/` directory. That is the loadable extension. `npm run build` type-checks with zero TypeScript errors, bundles with esbuild, copies the static pages, vendors the PDF.js worker, and generates the icons.
+
+To run the complete release gate and create a deterministic Chrome Web Store
+archive:
+
+```
+npm run package
+```
+
+The uploadable artifact is written to `release/rxiver-gloss-v<version>.zip`. The ZIP
+contains the contents of `dist/` at its root, as required by extension stores.
+`PRIVACY.md` contains the disclosure text to publish with the store listing.
 
 To run the unit tests:
 
@@ -36,7 +55,7 @@ npm test
 3. Turn on "Developer mode" (top right).
 4. Click "Load unpacked" and select the `dist/` directory.
 
-The gloss icon appears in the toolbar. On Edge the steps are the same at `edge://extensions`.
+The rxiver gloss icon appears in the toolbar. On Edge the steps are the same at `edge://extensions`.
 
 ## Set your API key
 

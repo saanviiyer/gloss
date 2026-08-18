@@ -2,16 +2,22 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>gloss</title>
+    <title>rxiver gloss</title>
     <link rel="stylesheet" href="./popup.css" />
   </head>
   <body>
     <div class="pop">
-      <div class="head"><span class="brand">gloss</span></div>
+      <div class="head"><span class="brand">rxiver gloss</span></div>
       <div id="status" class="status">Loading…</div>
       <div id="model" class="model"></div>
       <p class="hint">Highlight a sentence on any page, or press Alt+E, to explain it.</p>
+      <div class="history-head">
+        <strong>Recent explanations</strong>
+        <button id="clear-history" type="button">Clear</button>
+      </div>
+      <div id="history" class="history"><div class="empty">No explanations yet.</div></div>
       <div class="links">
+        <button id="export-rxiver" type="button">Export to rxiver</button>
         <a id="options" href="#">Settings</a>
         <a id="reader" href="#">PDF reader</a>
       </div>

@@ -7,6 +7,7 @@ const keyEl = document.getElementById("apiKey") as HTMLInputElement;
 const modelEl = document.getElementById("model") as HTMLInputElement;
 const styleEl = document.getElementById("style") as HTMLSelectElement;
 const lengthEl = document.getElementById("maxLength") as HTMLInputElement;
+const historyEl = document.getElementById("saveHistory") as HTMLInputElement;
 const saveBtn = document.getElementById("save") as HTMLButtonElement;
 const statusEl = document.getElementById("status") as HTMLDivElement;
 const modeEl = document.getElementById("mode") as HTMLDivElement;
@@ -31,6 +32,7 @@ async function load() {
   modelEl.value = s.model;
   styleEl.value = s.style;
   lengthEl.value = String(s.maxLength);
+  historyEl.checked = s.saveHistory;
   renderMode(s.apiKey.trim().length > 0);
 }
 
@@ -41,6 +43,7 @@ saveBtn.addEventListener("click", async () => {
     model: modelEl.value.trim() || "claude-haiku-4-5",
     style: styleEl.value as Style,
     maxLength,
+    saveHistory: historyEl.checked,
   });
   lengthEl.value = String(saved.maxLength);
   renderMode(saved.apiKey.trim().length > 0);

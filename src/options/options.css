@@ -58,6 +58,24 @@ h1 {
   color: #6b7280;
   margin-top: 4px;
 }
+.check-field {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  margin-bottom: 18px;
+}
+.check-field input {
+  margin-top: 4px;
+}
+.check-field span {
+  font-weight: 600;
+}
+.check-field small {
+  display: block;
+  color: #6b7280;
+  font-weight: 400;
+  margin-top: 2px;
+}
 .actions {
   display: flex;
   align-items: center;

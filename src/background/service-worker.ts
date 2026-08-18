@@ -3,6 +3,7 @@
 
 import { explain } from "../lib/explain.js";
 import { getSettings } from "../lib/settings.js";
+import { addHistory } from "../lib/history.js";
 import {
   MSG_EXPLAIN,
   MSG_EXPLAIN_SELECTION,
@@ -42,7 +43,7 @@ chrome.commands.onCommand.addListener((command) => {
 });
 
 // Explanation requests from content script / reader.
-chrome.runtime.onMessage.addListener((message: GlossMessage, _sender, sendResponse) => {
+chrome.runtime.onMessage.addListener((message: GlossMessage, sender, sendResponse) => {
   if (message?.type !== MSG_EXPLAIN) return false;
 
   (async () => {
@@ -55,6 +56,15 @@ chrome.runtime.onMessage.addListener((message: GlossMessage, _sender, sendRespon
         style: settings.style,
         maxLength: settings.maxLength,
       });
+      if (settings.saveHistory) {
+        await addHistory({
+          ctx: message.ctx,
+          explanation: result.text,
+          sourceTitle: sender.tab?.title,
+          sourceUrl: sender.tab?.url || sender.url,
+          mock: result.mock,
+        });
+      }
       const response: ExplainResponse = { ok: true, text: result.text, mock: result.mock };
       sendResponse(response);
     } catch (err) {
