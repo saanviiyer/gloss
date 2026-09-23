@@ -1,127 +1,110 @@
 # rxiver gloss
 
-Highlight a sentence on a web page or in a PDF and an LLM explains what it means in a small tooltip. Built for researchers reading dense papers.
+rxiver gloss is a Chrome and Edge extension for researchers who read dense papers. You highlight a sentence on a web page or in a PDF, and an LLM explains it in a small card next to the selection.
 
-rxiver gloss is the Chrome / Edge reading companion for the canonical rxiver
-workspace. It sends highlighted text, plus a little surrounding context, to the
-Anthropic Messages API and shows a short explanation in a clean card next to the
-selection.
+gloss is the reading companion for the rxiver workspace. It sends the highlighted text and a little surrounding context to the Anthropic Messages API.
 
-## What it does
+## Features
 
-- Highlight text on any page and a small "Explain" button appears next to it. Click it to get an explanation.
-- Press Alt+E to explain the current selection.
+- Highlight text on any page and click the "Explain" button that appears.
+- Press Alt+E to explain the current selection. You can change the shortcut at `chrome://extensions/shortcuts`.
 - Right-click a selection and choose "Explain with gloss".
-- Read PDFs inside a bundled PDF.js viewer where the same highlight to Explain flow works.
-- Keeps an optional, local-only history of the latest 100 explanations, with
-  source links stripped of query strings and one-click copy from the popup.
-- Exports the complete history in rxiver's versioned JSON format. In rxiver,
-  open a collection and choose **Import from rxiver gloss** to turn highlights
-  into excerpts and explanations into research notes.
-- Runs in mock mode with no setup, so you can try the whole flow before adding a key.
+- Read PDFs in a bundled PDF.js viewer. The same highlight and Explain flow works there.
+- Optional local history of the latest 100 explanations. Saved source links have no query strings. You can copy an entry from the popup with one click.
+- Export the full history in rxiver's versioned JSON format. In rxiver, open a collection and choose "Import from rxiver gloss". Highlights become excerpts and explanations become research notes.
+- Mock mode with no setup, so you can try the whole flow before you add a key.
 
-## Build
+Every entry point uses the same card and sends the same surrounding context.
 
-Requirements: Node (18 or newer) and npm.
+## Run it
 
-```
+You need Node 18 or newer and npm.
+
+```bash
+git clone https://github.com/saanviiyer/gloss
+cd gloss
 npm install
 npm run build
 ```
 
-The build output is the `dist/` directory. That is the loadable extension. `npm run build` type-checks with zero TypeScript errors, bundles with esbuild, copies the static pages, vendors the PDF.js worker, and generates the icons.
+The build writes the loadable extension to `dist/`. `npm run build` type-checks with zero TypeScript errors, bundles with esbuild, copies the static pages, vendors the PDF.js worker and generates the icons.
 
-To run the complete release gate and create a deterministic Chrome Web Store
-archive:
+Tests:
 
-```
-npm run package
-```
-
-The uploadable artifact is written to `release/rxiver-gloss-v<version>.zip`. The ZIP
-contains the contents of `dist/` at its root, as required by extension stores.
-`PRIVACY.md` contains the disclosure text to publish with the store listing.
-
-To run the unit tests:
-
-```
+```bash
 npm test
 ```
 
-## Load it in Chrome
+Release package for the Chrome Web Store:
+
+```bash
+npm run package
+```
+
+This runs the tests and the build, then writes a deterministic archive to `release/rxiver-gloss-v<version>.zip`. The ZIP has the contents of `dist/` at its root, as extension stores require. `PRIVACY.md` has the disclosure text for the store listing.
+
+### Load it in Chrome
 
 1. Run `npm run build`.
 2. Open `chrome://extensions`.
 3. Turn on "Developer mode" (top right).
-4. Click "Load unpacked" and select the `dist/` directory.
+4. Click "Load unpacked" and select `dist/`.
 
-The rxiver gloss icon appears in the toolbar. On Edge the steps are the same at `edge://extensions`.
+On Edge, use `edge://extensions` with the same steps.
 
-## Set your API key
+## API key and settings
 
-By default gloss runs in mock mode and returns a clearly labeled placeholder, so nothing is required to try it.
+The extension has no environment variables. You set the key in the extension.
 
-To get real explanations:
+By default gloss runs in mock mode and returns a clearly labeled placeholder. To get real explanations:
 
-1. Click the gloss toolbar icon, then "Settings" (or right-click the icon and choose "Options").
+1. Click the gloss toolbar icon, then "Settings". You can also right-click the icon and choose "Options".
 2. Paste your Anthropic API key.
-3. Optionally change the model, the explanation style (Plain, ELI5, Technical), and the max length.
+3. Optionally change the model, the style (Plain, ELI5, Technical) and the max length.
 4. Click Save.
 
-The key is stored only in this browser via `chrome.storage.local`. It is never committed to this repository and never sent anywhere except directly to Anthropic.
+The key stays in this browser in `chrome.storage.local`. It is not in this repository, and it goes only to Anthropic. The default model is a fast model for short explanations. You can set any current model id in Settings.
 
-The default model is a fast model suited to short explanations. You can set any current model id in Settings.
+## PDF reader
 
-## Keyboard shortcut and context menu
+Chrome's built-in PDF viewer does not give extensions access to text selections. For this reason, gloss cannot work on a PDF in the native viewer. gloss has its own reader page built on a bundled copy of PDF.js.
 
-- Keyboard shortcut: Alt+E explains the current selection. You can change it at `chrome://extensions/shortcuts`.
-- Context menu: right-click a selection and choose "Explain with gloss".
-
-Both routes use the same card UI as the "Explain" button, including the surrounding context that gets sent so the model explains the highlighted part in context.
-
-## PDF reader (and the native viewer limitation)
-
-Chrome's built-in PDF viewer does not expose text selections to extensions, so gloss cannot attach its highlight to Explain flow to a PDF opened in the native viewer. To work around this, gloss ships its own PDF reader page built on a bundled copy of PDF.js.
-
-Open it from the popup ("PDF reader") or the Settings page ("Open the PDF reader"). In the reader you can:
-
-- Open a local PDF file, or
-- Paste a PDF URL, or
-- Pass a URL directly with `reader/reader.html?file=<url>`.
-
-The reader renders pages with a selectable text layer, so highlighting a sentence there triggers the same Explain flow as on a normal web page.
+Open the reader from the popup ("PDF reader") or from Settings ("Open the PDF reader"). You can open a local PDF file or paste a PDF URL. You can also pass a URL with `reader/reader.html?file=<url>`. The reader has a selectable text layer, so the Explain flow works as it does on a web page.
 
 ## Privacy
 
-gloss collects nothing and has no server of its own. When you ask for an explanation, the highlighted text plus a little surrounding context and your API key are sent directly to the Anthropic API from the extension's background service worker. Nothing else is collected, stored remotely, or shared. Your API key stays in `chrome.storage.local` in your browser. In mock mode no network request is made at all.
+gloss collects nothing and has no server of its own. When you ask for an explanation, the extension's background service worker sends the highlighted text, a little surrounding context and your API key directly to the Anthropic API. Nothing else is collected, stored remotely or shared. In mock mode the extension makes no network request. See `PRIVACY.md` for the full policy.
 
 ## How it works
 
-- The content script detects a selection, extracts the highlighted text plus surrounding sentence context, and shows the button and card.
-- The background service worker owns the network call to `https://api.anthropic.com/v1/messages`, which avoids page CORS restrictions. It sends the `anthropic-dangerous-direct-browser-access: true` header that direct browser calls require, along with `x-api-key` and `anthropic-version`.
-- If no API key is set, the explainer returns a labeled placeholder instead of calling the API.
+- The content script detects a selection and extracts the text and the surrounding sentence context. It shows the button and the card.
+- The background service worker makes the call to `https://api.anthropic.com/v1/messages`, which avoids page CORS limits. It sends `x-api-key`, `anthropic-version` and the `anthropic-dangerous-direct-browser-access: true` header that direct browser calls need.
+- With no API key, the explainer returns a labeled placeholder and does not call the API.
 
-The pure logic (context extraction, prompt construction, response parsing, and the mock explainer) lives in small modules under `src/lib/` and is covered by unit tests in `test/`.
+Small modules in `src/lib/` hold the pure logic (context extraction, prompt construction, response parsing, mock explainer). Unit tests in `test/` cover them.
 
-## Project layout
+## Layout
 
 ```
 src/
-  background/service-worker.ts   background worker: API call, command, context menu
-  content/content-script.ts      in-page selection UI wiring
+  background/service-worker.ts   API call, keyboard command, context menu
+  content/content-script.ts      in-page selection UI
   content/content.css            button and card styles
   lib/context.ts                 selection and context extraction (pure)
   lib/prompt.ts                  prompt construction (pure)
   lib/parse.ts                   API response parsing (pure)
-  lib/explain.ts                 explainer: mock mode plus the API call
-  lib/settings.ts                chrome.storage-backed settings
+  lib/explain.ts                 mock mode and the API call
+  lib/history.ts                 local explanation history
+  lib/settings.ts                chrome.storage settings
   lib/types.ts                   shared types and defaults
-  lib/messaging.ts               message contract between scripts
-  shared/gloss-ui.ts             selection handling and tooltip UI
+  lib/messaging.ts               messages between scripts
+  shared/gloss-ui.ts             selection handling and card UI
   reader/reader.ts               bundled PDF.js reader
   options/                       options page
   popup/                         toolbar popup
   manifest.json                  MV3 manifest
-test/                            vitest unit tests
+test/                            Vitest unit tests
 build.mjs                        type-check, bundle, copy, icons
+package.mjs                      release ZIP
+PRIVACY.md                       privacy policy for the store listing
 ```
